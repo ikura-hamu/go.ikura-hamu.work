@@ -1,5 +1,6 @@
 import json
 import pathlib
+import os
 
 html_template = """<!DOCTYPE html>
 <html>
@@ -30,7 +31,11 @@ def exit_with_error(msg: str):
 
 
 def make_html(import_prefix: str, owner: str, repo_name: str, dir: str):
-    html_file_path = pathlib.Path(repo_name) / dir / "index.html"
+    dir_path = pathlib.Path(repo_name) / dir
+    html_file_path = dir_path / "index.html"
+
+    os.makedirs(dir_path, exist_ok=True)
+
     with open(html_file_path, "w") as f:
         f.write(
             html_template.format(
