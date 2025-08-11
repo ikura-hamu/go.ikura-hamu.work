@@ -1,6 +1,6 @@
 import json
-import pathlib
 import os
+import pathlib
 
 html_template = """<!DOCTYPE html>
 <html>
@@ -31,8 +31,8 @@ def exit_with_error(msg: str):
 
 
 def make_html(import_prefix: str, owner: str, repo_name: str, dir: str):
-    dir_path = pathlib.Path(repo_name) / dir
-    html_file_path = dir_path / "index.html"
+    dir_path = pathlib.Path(".").joinpath(repo_name, dir)
+    html_file_path = dir_path.joinpath("index.html")
 
     os.makedirs(dir_path, exist_ok=True)
 
@@ -66,7 +66,9 @@ def main():
         imp for imp in imports if imp.startswith(mod_path)
     ]
 
-    import_suffix = [imp.removeprefix(mod_path) for imp in import_paths]
+    import_suffix = [
+        imp.removeprefix(mod_path).removeprefix("/") for imp in import_paths
+    ]
 
     for suffix in import_suffix:
         make_html(mod_path, owner, repo_name, suffix)
