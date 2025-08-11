@@ -45,15 +45,15 @@ def main():
     payload = json.loads(input())
 
     try:
+        owner: str = payload["Owner"]
+        repo_name: str = payload["RepoName"]
+
         go_mod_info = payload["GoModInfo"]
 
         module = go_mod_info["Module"]
         imports: list[str] = go_mod_info["Imports"]
 
         mod_path: str = module["Path"]
-
-        owner: str = module["Owner"]
-        repo_name: str = module["RepoName"]
     except KeyError as e:
         exit_with_error(f"invalid payload: {e}")
 
