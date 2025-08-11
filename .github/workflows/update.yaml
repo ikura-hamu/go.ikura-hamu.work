@@ -1,0 +1,36 @@
+name: Update Repository
+on:
+  repository_dispatch:
+    types: [update]
+  workflow_dispatch:
+    inputs:
+      client_payload:
+        description: "Client payload"
+        required: true
+        default: "{}"
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run script
+        shell: bash
+        env:
+          CLIENT_PAYLOAD: ${{ github.event.client_payload || github.event.inputs.client_payload }}
+        run: |
+          echo $CLIENT_PAYLOAD | python3 index.py
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update generated files" || echo "No changes to commit"
+          git push
