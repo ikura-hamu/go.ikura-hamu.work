@@ -48,7 +48,6 @@ def make_html(import_prefix: str, owner: str, repo_name: str, dir: str):
 
 def main():
     payload_str = input()
-    print("payload_str: ", payload_str)
     payload = json.loads(payload_str)
 
     try:
