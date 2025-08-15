@@ -24,7 +24,7 @@ jobs:
         shell: bash
         env:
           CLIENT_PAYLOAD: |
-            "${{ (github.event.client_payload && toJson(github.event.client_payload)) || github.event.inputs.client_payload }}"
+            ${{ (github.event.client_payload && toJson(github.event.client_payload)) || github.event.inputs.client_payload }}
         run: |
           echo $CLIENT_PAYLOAD | python3 ../index.py
         working-directory: "dist"
