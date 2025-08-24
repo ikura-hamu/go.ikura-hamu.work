@@ -20,29 +20,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      # - name: Run script
-      #   shell: bash
-      #   env:
-      #     CLIENT_PAYLOAD: |
-      #       ${{ (github.event.client_payload && toJson(github.event.client_payload)) || github.event.inputs.client_payload }}
-      #   run: |
-      #     echo $CLIENT_PAYLOAD | python3 ../index.py
-      #   working-directory: "dist"
-
-      # - name: Commit changes
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git add .
-      #     git commit -m "Update generated files" || echo "No changes to commit"
-      #     git push
-
-      - uses: ikura-hamu/go-import-pages/update@main
-        with:
-          payload: ${{ (github.event.client_payload && toJson(github.event.client_payload)) || github.event.inputs.client_payload }}
-          pages_dir: "dist_test"
+      - name: Run script
+        shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLIENT_PAYLOAD: |
+            ${{ (github.event.client_payload && toJson(github.event.client_payload)) || github.event.inputs.client_payload }}
+        run: |
+          echo $CLIENT_PAYLOAD | python3 ../index.py
+        working-directory: "dist"
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update generated files" || echo "No changes to commit"
+          git push
 
   pages:
     runs-on: ubuntu-latest
