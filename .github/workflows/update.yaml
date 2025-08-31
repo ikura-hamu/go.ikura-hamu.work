@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - uses: ikura-hamu/go-import-pages/update@v0.1.0
+      - uses: ikura-hamu/go-import-pages/update@v0.1.1
         with:
           payload: ${{ github.event.comment.body }}
           pages_dir: "dist"
