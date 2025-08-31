@@ -16,7 +16,8 @@ jobs:
 
       - uses: ikura-hamu/go-import-pages/update@v0.1.1
         with:
-          payload: ${{ github.event.comment.body }}
+          payload: |
+            ${{ github.event.comment.body }}
           pages_dir: "dist"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           change_type: "commit"
